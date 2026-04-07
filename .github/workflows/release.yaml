@@ -35,13 +35,13 @@ on:
 
 jobs:
   release:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          ssh-key: ${{ secrets.RDKCM_DEPLOY_KEY }}
 
       - name: Semver release
         id: release
@@ -49,16 +49,24 @@ jobs:
         with:
           release: true
 
-      - name: Push tag via Git
-        run: git push origin ${{ steps.release.outputs.version }}
+      - name: Convert to annotated tag
+        run: |
+          VERSION="${{ steps.release.outputs.version }}"
+          git tag -d "$VERSION"
+          git tag -a "$VERSION" -m "$VERSION" HEAD
 
-      - name: Generate Changelog
-        run: cog changelog --at ${{ steps.release.outputs.version }} > CHANGELOG.md
+      - name: Push version commit and tag
+        run: |
+          git push origin HEAD:main
+          git push origin "${{ steps.release.outputs.version }}"
+
+      - name: Generate release body
+        run: cog changelog --at ${{ steps.release.outputs.version }} > /tmp/release_body.md
 
       # Correlates release with already uploaded tag. This action doesn't support deploy keys, so we push the tag
       # ourselves earlier.
       - name: Upload github release
         uses: softprops/action-gh-release@v1
         with:
-          body_path: CHANGELOG.md
+          body_path: /tmp/release_body.md
           tag_name: ${{ steps.release.outputs.version }}
