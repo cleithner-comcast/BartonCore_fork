@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [4.0.1](https://github.com/rdkcentral/BartonCore/compare/a8be7a666cfc90814de2cb75f7c63baa97e2ae00..4.0.1) - 2026-04-07
+#### Bug Fixes
+- test fix - ([82e3e17](https://github.com/rdkcentral/BartonCore/commit/82e3e177efcc3bfb6fa59353da2b41d4c1c800d7)) - Christian Leithner
+#### Continuous Integration
+- improve release workflow and regenerate full CHANGELOG (#2) - ([314b3fa](https://github.com/rdkcentral/BartonCore/commit/314b3fab5a7a904c57fc7297414bbb892caf9ec9)) - Christian Leithner
+
+- - -
+
 ## [4.0.0](https://github.com/rdkcentral/BartonCore/compare/3.1.1..4.0.0) - 2026-04-06
 #### Breaking Changes
 - **(matter)** Remove Matter.js support from SBMD (#190) - ([7c1c6bd](https://github.com/rdkcentral/BartonCore/commit/7c1c6bd5991a8cf2e58b3b436c32fbefd901254e)) - Thomas Lea
